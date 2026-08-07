@@ -11,6 +11,11 @@
 </p>
 
 <p align="center">
+  <a href="https://stefanoguerrini.dev/LinkStrip/">Website</a> ·
+  <a href="https://github.com/StefanoGuerrini/LinkStrip/releases">Releases</a>
+</p>
+
+<p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
   <img src="https://img.shields.io/badge/platform-macOS%2013%2B-lightgrey" alt="macOS 13+">
   <img src="https://img.shields.io/badge/arch-arm64%20%7C%20x86_64-blue" alt="Apple Silicon & Intel">
