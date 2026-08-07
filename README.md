@@ -29,6 +29,7 @@
 - **Redirect-link unwrapping** – extracts real destinations from click-tracking services like `link.fndrsp.net`.
 - **Clean clicked links** *(optional)* – set LinkStrip as the default browser; clicked links are cleaned and forwarded to your real browser.
 - **Share extension** – right-click any link → Share → LinkStrip to clean it without changing your default browser.
+- **Firefox extension** – right-click any link in Firefox → Copy cleaned LinkStrip URL.
 - **Three independent toggles** – enable or disable cleaning for copied links, redirect links, and clicked links separately.
 - **Local rule engine** – bundled `tracking-params.json`; no network calls, ever.
 - **Editable rules** – add custom parameters, view the bundled defaults, or import/export your own JSON rule sets.
@@ -100,6 +101,20 @@ If you prefer not to change your default browser, use the built-in Share extensi
 3. The cleaned URL is copied to your clipboard.
 
 The Share extension is included in `LinkStrip.app/Contents/PlugIns/LinkStripShareExtension.appex` and is registered automatically when the app is first launched.
+
+## Firefox extension
+
+For links inside Firefox (e.g., Gmail), install the LinkStrip Firefox extension:
+
+```bash
+make firefox-extension
+```
+
+This creates `.build/linkstrip-firefox-<version>.zip`. Load it in Firefox via `about:debugging#/runtime/this-firefox` → **Load Temporary Add-on…**.
+
+Once installed, right-click any link in Firefox and choose **Copy cleaned LinkStrip URL**.
+
+The Firefox extension shares the same `tracking-params.json` rule file as the macOS app. See `extensions/firefox/README.md` for details.
 
 ## Build from source
 

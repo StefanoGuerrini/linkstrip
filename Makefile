@@ -1,4 +1,4 @@
-.PHONY: all build release app app-universal test clean run
+.PHONY: all build release app app-universal firefox-extension test clean run
 
 APP_NAME := LinkStrip
 BUNDLE_ID := com.linkstrip.app
@@ -103,6 +103,9 @@ app-universal: share-extension
 
 app-with-icons: icons app
 	@echo "Packaged $(APP_NAME).app with regenerated icons"
+
+firefox-extension:
+	@source .venv/bin/activate && python3 extensions/firefox/build-extension.py
 
 test:
 	swift test
