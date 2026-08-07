@@ -53,6 +53,7 @@ jobs:
           files: |
             .build/LinkStrip.app.zip
             .build/linkstrip-firefox-*.zip
+            .build/linkstrip-firefox-*.xpi
           generate_release_notes: true
           draft: true
           prerelease: false
