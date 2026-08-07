@@ -61,28 +61,46 @@ final class URLCleaner {
     }
 
     /// Attempts to extract and clean a destination URL from common redirect
-    /// or click-tracking services. Returns the cleaned destination, `nil` if
-    /// no embedded URL is found, or the original string if the destination
-    /// contains no tracking parameters.
+    /// or click-tracking services. Returns the cleaned destination, the
+    /// extracted destination if cleaning made no changes, or `nil` if no
+    /// embedded URL is found.
     func cleanRedirect(_ urlString: String) -> String? {
-        guard let firstSchemeEnd = urlString.range(of: "://")?.upperBound else {
+        // Decode percent encoding first. Many redirect services embed the
+        // destination as a URL-encoded path segment, e.g.:
+        // link.fndrsp.net/CL0/https:%2F%2Fexample.com%3Ffoo%3Dbar
+        let decoded = urlString.removingPercentEncoding ?? urlString
+
+        guard let firstSchemeEnd = decoded.range(of: "://")?.upperBound else {
             return nil
         }
 
         // Look for a second http(s):// scheme after the first one. This handles
         // services like link.fndrsp.net/CL0/https://real-destination.com/...
-        let afterFirstScheme = String(urlString[firstSchemeEnd...])
-        if let embeddedRange = afterFirstScheme.range(of: "https://")
-            ?? afterFirstScheme.range(of: "http://") {
-            var embedded = String(afterFirstScheme[embeddedRange.lowerBound...])
-            if let decoded = embedded.removingPercentEncoding {
-                embedded = decoded
-            }
-            guard let cleaned = clean(embedded) else { return embedded }
-            return cleaned
+        let afterFirstScheme = String(decoded[firstSchemeEnd...])
+        guard let embeddedRange = afterFirstScheme.range(of: "https://")
+            ?? afterFirstScheme.range(of: "http://") else {
+            return cleanRedirectFromQuery(urlString)
         }
 
-        // Fallback: some redirect services put the destination in a query param.
+        var embedded = String(afterFirstScheme[embeddedRange.lowerBound...])
+
+        // Some services append routing/tracking path segments after the
+        // embedded URL (e.g. .../1/<id>/<signature>). Strip the first such
+        // delimiter to obtain a valid destination URL.
+        let trailingDelimiters = ["/1/", "/2/"]
+        if let delimiterRange = trailingDelimiters.compactMap({ embedded.range(of: $0) }).first {
+            embedded = String(embedded[..<delimiterRange.lowerBound])
+        }
+
+        // If stripping the delimiter made the URL invalid, fall back to the
+        // raw embedded string and let the cleaner handle it.
+        guard let cleaned = clean(embedded) else { return embedded }
+        return cleaned
+    }
+
+    /// Fallback for redirect services that pass the destination in a query
+    /// parameter rather than the path.
+    private func cleanRedirectFromQuery(_ urlString: String) -> String? {
         guard let components = URLComponents(string: urlString),
               let queryItems = components.queryItems else {
             return nil
