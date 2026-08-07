@@ -1,5 +1,9 @@
 <p align="center">
-  <img src="assets/header.png" width="400" height="90" alt="LinkStrip">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/linkstrip-header.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/linkstrip-header-light.svg">
+    <img alt="LinkStrip" src="assets/linkstrip-header-light.svg" width="400">
+  </picture>
 </p>
 
 <p align="center">
@@ -138,7 +142,7 @@ Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines
 ## Credits
 
 - Created by [Stefano Guerrini](https://github.com/StefanoGuerrini)
-- Logo, menu-bar icon, and header by Stefano Guerrini
+- Logo, menu-bar icon, header, and light-mode variants by Stefano Guerrini
 - MIT Licensed
 
 ## Privacy
