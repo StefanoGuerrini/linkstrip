@@ -2,7 +2,8 @@ import Foundation
 
 /// Keys and defaults for user preferences.
 enum PreferenceKey: String {
-    case monitorEnabled
+    case cleanCopiedLinks
+    case cleanRedirectLinks
     case notificationsEnabled
     case launchAtLoginEnabled
     case customParameters
@@ -14,8 +15,12 @@ final class PreferencesManager: ObservableObject {
 
     private let defaults: UserDefaults
 
-    @Published var monitorEnabled: Bool {
-        didSet { defaults.set(monitorEnabled, forKey: PreferenceKey.monitorEnabled.rawValue) }
+    @Published var cleanCopiedLinks: Bool {
+        didSet { defaults.set(cleanCopiedLinks, forKey: PreferenceKey.cleanCopiedLinks.rawValue) }
+    }
+
+    @Published var cleanRedirectLinks: Bool {
+        didSet { defaults.set(cleanRedirectLinks, forKey: PreferenceKey.cleanRedirectLinks.rawValue) }
     }
 
     @Published var notificationsEnabled: Bool {
@@ -39,7 +44,8 @@ final class PreferencesManager: ObservableObject {
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
-        self.monitorEnabled = defaults.object(forKey: PreferenceKey.monitorEnabled.rawValue) as? Bool ?? true
+        self.cleanCopiedLinks = defaults.object(forKey: PreferenceKey.cleanCopiedLinks.rawValue) as? Bool ?? true
+        self.cleanRedirectLinks = defaults.object(forKey: PreferenceKey.cleanRedirectLinks.rawValue) as? Bool ?? true
         self.notificationsEnabled = defaults.object(forKey: PreferenceKey.notificationsEnabled.rawValue) as? Bool ?? true
         self.launchAtLoginEnabled = defaults.object(forKey: PreferenceKey.launchAtLoginEnabled.rawValue) as? Bool ?? false
         self.customParameters = defaults.object(forKey: PreferenceKey.customParameters.rawValue) as? [String] ?? []
@@ -50,7 +56,8 @@ final class PreferencesManager: ObservableObject {
 
     /// Resets all preferences to factory defaults.
     func restoreDefaults() {
-        monitorEnabled = true
+        cleanCopiedLinks = true
+        cleanRedirectLinks = true
         notificationsEnabled = true
         launchAtLoginEnabled = false
         customParameters = []

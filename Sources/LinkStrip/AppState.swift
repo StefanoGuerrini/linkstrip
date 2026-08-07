@@ -61,11 +61,12 @@ final class AppState: ObservableObject {
             }
             .store(in: &cancellables)
 
-        preferences.$monitorEnabled
+        preferences.$cleanCopiedLinks
             .dropFirst()
+            .merge(with: preferences.$cleanRedirectLinks.dropFirst())
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] enabled in
-                enabled ? self?.startMonitor() : self?.stopMonitor()
+            .sink { [weak self] _ in
+                self?.restartMonitor()
             }
             .store(in: &cancellables)
     }
@@ -73,8 +74,20 @@ final class AppState: ObservableObject {
     private func startMonitor() {
         guard monitor == nil else { return }
         monitor = ClipboardMonitor(
-            cleaner: cleaner,
-            isEnabled: { [weak self] in self?.preferences.monitorEnabled ?? true }
+            isEnabled: { [weak self] in
+                guard let self = self else { return false }
+                return self.preferences.cleanCopiedLinks || self.preferences.cleanRedirectLinks
+            },
+            clean: { [weak self] url in
+                guard let self = self else { return nil }
+                if self.preferences.cleanRedirectLinks, let unwrapped = self.cleaner.cleanRedirect(url) {
+                    return unwrapped
+                }
+                if self.preferences.cleanCopiedLinks, let cleaned = self.cleaner.clean(url), cleaned != url {
+                    return cleaned
+                }
+                return nil
+            }
         ) { [weak self] original, cleaned in
             self?.handleCleaned(original: original, cleaned: cleaned)
         }

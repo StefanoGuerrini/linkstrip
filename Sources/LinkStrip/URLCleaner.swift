@@ -55,4 +55,44 @@ final class URLCleaner {
     var trackedParameters: [String] {
         Array(parameters).sorted()
     }
+
+    /// Attempts to extract and clean a destination URL from common redirect
+    /// or click-tracking services. Returns the cleaned destination, `nil` if
+    /// no embedded URL is found, or the original string if the destination
+    /// contains no tracking parameters.
+    func cleanRedirect(_ urlString: String) -> String? {
+        guard let firstSchemeEnd = urlString.range(of: "://")?.upperBound else {
+            return nil
+        }
+
+        // Look for a second http(s):// scheme after the first one. This handles
+        // services like link.fndrsp.net/CL0/https://real-destination.com/...
+        let afterFirstScheme = String(urlString[firstSchemeEnd...])
+        if let embeddedRange = afterFirstScheme.range(of: "https://")
+            ?? afterFirstScheme.range(of: "http://") {
+            var embedded = String(afterFirstScheme[embeddedRange.lowerBound...])
+            if let decoded = embedded.removingPercentEncoding {
+                embedded = decoded
+            }
+            guard let cleaned = clean(embedded) else { return embedded }
+            return cleaned
+        }
+
+        // Fallback: some redirect services put the destination in a query param.
+        guard let components = URLComponents(string: urlString),
+              let queryItems = components.queryItems else {
+            return nil
+        }
+
+        let redirectParamNames: Set<String> = ["url", "u", "link", "destination", "target", "redirect", "to"]
+        for item in queryItems where redirectParamNames.contains(item.name.lowercased()) {
+            guard let value = item.value else { continue }
+            let decoded = value.removingPercentEncoding ?? value
+            guard decoded.hasPrefix("http://") || decoded.hasPrefix("https://") else { continue }
+            guard let cleaned = clean(decoded), cleaned != decoded else { continue }
+            return cleaned
+        }
+
+        return nil
+    }
 }

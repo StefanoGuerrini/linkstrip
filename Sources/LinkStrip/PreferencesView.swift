@@ -8,9 +8,15 @@ struct PreferencesView: View {
 
     var body: some View {
         Form {
-            Section("General") {
-                Toggle("Monitor clipboard", isOn: $appState.preferences.monitorEnabled)
+            Section("Clipboard") {
+                Toggle("Clean copied links", isOn: $appState.preferences.cleanCopiedLinks)
+                    .help("Strip tracking parameters from URLs copied to the clipboard.")
+                Toggle("Clean redirect links", isOn: $appState.preferences.cleanRedirectLinks)
+                    .help("Extract and clean destination URLs from click-tracking/redirect services.")
                 Toggle("Show notifications", isOn: $appState.preferences.notificationsEnabled)
+            }
+
+            Section("General") {
                 Toggle("Launch at login", isOn: $appState.preferences.launchAtLoginEnabled)
                     .help("Requires a bundled, code-signed app for macOS to honor the login item.")
             }
@@ -33,7 +39,7 @@ struct PreferencesView: View {
                         }
                     }
                 }
-                .frame(minHeight: 120)
+                .frame(minHeight: 80)
 
                 HStack {
                     TextField("New parameter", text: $customParameterInput)
@@ -57,16 +63,28 @@ struct PreferencesView: View {
                     }
                 }
             }
+
+            Section("Default Tracking Parameters") {
+                Text("Parameters removed automatically from every copied link.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+
+                List(appState.cleaner.trackedParameters, id: \.self) { param in
+                    Text(param)
+                }
+                .frame(minHeight: 160)
+            }
         }
         .formStyle(.grouped)
         .padding()
-        .frame(minWidth: 420, minHeight: 360)
+        .frame(minWidth: 460, minHeight: 620)
     }
 
     private func addParameter() {
         let trimmed = customParameterInput.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty,
-              !appState.preferences.customParameters.contains(trimmed) else { return }
+              !appState.preferences.customParameters.contains(trimmed),
+              !appState.cleaner.trackedParameters.contains(trimmed) else { return }
         appState.preferences.customParameters.append(trimmed)
         customParameterInput = ""
     }

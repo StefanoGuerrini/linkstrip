@@ -66,4 +66,33 @@ final class URLCleanerTests: XCTestCase {
         let input = "https://example.com/page?UTM_SOURCE=newsletter"
         XCTAssertEqual(cleaner.clean(input), input)
     }
+
+    func testCleanRedirectExtractsDestinationFromPath() {
+        let input = "https://link.fndrsp.net/CL0/https://example.com/page?utm_source=newsletter"
+        XCTAssertEqual(
+            cleaner.cleanRedirect(input),
+            "https://example.com/page"
+        )
+    }
+
+    func testCleanRedirectExtractsDestinationFromQuery() {
+        let input = "https://tracker.example.com/click?url=https%3A%2F%2Fexample.com%2Fpage%3Futm_source%3Dnewsletter"
+        XCTAssertEqual(
+            cleaner.cleanRedirect(input),
+            "https://example.com/page"
+        )
+    }
+
+    func testCleanRedirectReturnsNilWhenNoRedirectPresent() {
+        let input = "https://example.com/page?utm_source=newsletter"
+        XCTAssertNil(cleaner.cleanRedirect(input))
+    }
+
+    func testCleanRedirectUnwrapsEvenWithoutTrackingParameters() {
+        let input = "https://link.fndrsp.net/CL0/https://example.com/page"
+        XCTAssertEqual(
+            cleaner.cleanRedirect(input),
+            "https://example.com/page"
+        )
+    }
 }

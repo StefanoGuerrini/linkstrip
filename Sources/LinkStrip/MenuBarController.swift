@@ -8,11 +8,13 @@ final class MenuBarController: NSObject {
     private var statusItem: NSStatusItem?
     private var historyWindowController: NSWindowController?
     private var preferencesWindowController: NSWindowController?
+    private var aboutWindowController: NSWindowController?
     private var cancellables = Set<AnyCancellable>()
 
     private let lastCleanedItem = NSMenuItem(title: "No link cleaned yet", action: nil, keyEquivalent: "")
     private let historyMenuItem = NSMenuItem(title: "Open History", action: #selector(openHistory), keyEquivalent: "")
     private let preferencesMenuItem = NSMenuItem(title: "Preferences…", action: #selector(openPreferences), keyEquivalent: ",")
+    private let aboutMenuItem = NSMenuItem(title: "About LinkStrip", action: #selector(openAbout), keyEquivalent: "")
     private let quitMenuItem = NSMenuItem(title: "Quit", action: #selector(quit), keyEquivalent: "q")
 
     init(appState: AppState) {
@@ -42,6 +44,9 @@ final class MenuBarController: NSObject {
         menu.addItem(preferencesMenuItem)
 
         menu.addItem(.separator())
+
+        aboutMenuItem.target = self
+        menu.addItem(aboutMenuItem)
 
         quitMenuItem.target = self
         menu.addItem(quitMenuItem)
@@ -95,6 +100,18 @@ final class MenuBarController: NSObject {
             preferencesWindowController = NSWindowController(window: window)
         }
         preferencesWindowController?.showWindow(nil)
+        NSApp.activate(ignoringOtherApps: true)
+    }
+
+    @objc private func openAbout() {
+        if aboutWindowController == nil {
+            let hostingController = NSHostingController(rootView: AboutView())
+            let window = NSWindow(contentViewController: hostingController)
+            window.title = "About LinkStrip"
+            window.styleMask = [.titled, .closable]
+            aboutWindowController = NSWindowController(window: window)
+        }
+        aboutWindowController?.showWindow(nil)
         NSApp.activate(ignoringOtherApps: true)
     }
 

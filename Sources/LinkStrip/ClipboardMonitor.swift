@@ -2,31 +2,33 @@ import AppKit
 import Foundation
 
 /// Monitors the general pasteboard for URL strings and rewrites the
-/// clipboard when a known tracking parameter is detected.
+/// clipboard when a known tracking parameter is detected or a redirect
+/// link is unwrapped.
 final class ClipboardMonitor {
     private let pasteboard = NSPasteboard.general
     private var lastChangeCount = NSPasteboard.general.changeCount
     private var timer: Timer?
     private let interval: TimeInterval
 
-    private let cleaner: URLCleaner
     private let isEnabled: () -> Bool
+    private let clean: (String) -> String?
     private let onClean: ((_ original: String, _ cleaned: String) -> Void)?
 
     /// - Parameters:
-    ///   - cleaner: The `URLCleaner` used to strip tracking parameters.
     ///   - interval: Polling interval in seconds. Defaults to 0.5 s.
-    ///   - isEnabled: Closure returning the current monitoring preference.
+    ///   - isEnabled: Closure returning whether monitoring is currently enabled.
+    ///   - clean: Closure that receives the original URL string and returns the
+    ///     cleaned version, or `nil` if no change is needed.
     ///   - onClean: Optional callback invoked after a successful clean.
     init(
-        cleaner: URLCleaner,
         interval: TimeInterval = 0.5,
         isEnabled: @escaping () -> Bool,
+        clean: @escaping (String) -> String?,
         onClean: ((_ original: String, _ cleaned: String) -> Void)? = nil
     ) {
-        self.cleaner = cleaner
         self.interval = interval
         self.isEnabled = isEnabled
+        self.clean = clean
         self.onClean = onClean
     }
 
@@ -59,7 +61,7 @@ final class ClipboardMonitor {
         lastChangeCount = pasteboard.changeCount
 
         guard let original = pasteboard.string(forType: .string),
-              let cleaned = cleaner.clean(original),
+              let cleaned = clean(original),
               cleaned != original else {
             return
         }
