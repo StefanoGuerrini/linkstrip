@@ -39,7 +39,7 @@ struct AboutView: View {
             }
 
             Button("Open Source Repository") {
-                if let url = URL(string: "https://github.com/StefanoGuerrini/LinkStrip") {
+                if let url = URL(string: "https://github.com/StefanoGuerrini/linkstrip") {
                     NSWorkspace.shared.open(url)
                 }
             }

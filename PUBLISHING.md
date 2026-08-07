@@ -50,7 +50,7 @@ A convenient discoverability layer on top of GitHub Releases.
 - Requires submitting and maintaining a cask formula in `Homebrew/homebrew-cask` or a custom tap.
 
 **Requirements**
-- A stable, versioned download URL (e.g., `https://github.com/StefanoGuerrini/LinkStrip/releases/download/v1.2.0/LinkStrip.app.zip`).
+- A stable, versioned download URL (e.g., `https://github.com/StefanoGuerrini/linkstrip/releases/download/v1.2.0/LinkStrip.app.zip`).
 - A publicly accessible appcast or manual version bumps.
 
 ## Code signing and notarization

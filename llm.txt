@@ -6,8 +6,8 @@ LinkStrip is a privacy-first, open-source macOS menu-bar application that remove
 
 - Platform: macOS 13 Ventura and later (Apple Silicon & Intel)
 - License: MIT
-- Repository: https://github.com/StefanoGuerrini/LinkStrip
-- Website: https://stefanoguerrini.dev/LinkStrip/
+- Repository: https://github.com/StefanoGuerrini/linkstrip
+- Website: https://stefanoguerrini.dev/linkstrip/
 - Author: Stefano Guerrini
 - Language/Framework: Swift 5.9+, SwiftUI for UI, AppKit for menu bar
 - Distribution: GitHub Releases as a signed .app bundle

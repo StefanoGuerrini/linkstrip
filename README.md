@@ -11,8 +11,8 @@
 </p>
 
 <p align="center">
-  <a href="https://stefanoguerrini.dev/LinkStrip/">Website</a> ·
-  <a href="https://github.com/StefanoGuerrini/LinkStrip/releases">Releases</a>
+  <a href="https://stefanoguerrini.dev/linkstrip/">Website</a> ·
+  <a href="https://github.com/StefanoGuerrini/linkstrip/releases">Releases</a>
 </p>
 
 <p align="center">
@@ -75,7 +75,7 @@ Add your own in **Preferences → Custom Tracking Parameters**.
 
 ## Install
 
-Download the latest release from [GitHub Releases](https://github.com/StefanoGuerrini/LinkStrip/releases), drag `LinkStrip.app` to `/Applications`, and launch it.
+Download the latest release from [GitHub Releases](https://github.com/StefanoGuerrini/linkstrip/releases), drag `LinkStrip.app` to `/Applications`, and launch it.
 
 Unsigned development builds and ad-hoc signed releases may trigger Gatekeeper. Right-click the app and choose **Open** if macOS warns you. Official releases should be signed with a Developer ID and notarized before distribution. See [PUBLISHING.md](PUBLISHING.md) for details.
 
@@ -107,7 +107,7 @@ Requires Xcode 15+ or the Swift 5.9+ toolchain on macOS 13+.
 
 ```bash
 # Clone the repository
-git clone https://github.com/StefanoGuerrini/LinkStrip.git
+git clone https://github.com/StefanoGuerrini/linkstrip.git
 cd LinkStrip
 
 # Debug build
