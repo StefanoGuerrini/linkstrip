@@ -32,10 +32,12 @@ final class URLCleaner {
     /// Returns the cleaned URL string, the original string if no parameters
     /// matched, or `nil` when the input is not a valid URL.
     func clean(_ urlString: String) -> String? {
-        guard var components = URLComponents(string: urlString),
-              let queryItems = components.queryItems,
-              !queryItems.isEmpty else {
+        guard var components = URLComponents(string: urlString) else {
             return nil
+        }
+        guard let queryItems = components.queryItems, !queryItems.isEmpty else {
+            // Valid URL with no query string; nothing to clean.
+            return urlString
         }
 
         let cleanedItems = queryItems.filter { item in

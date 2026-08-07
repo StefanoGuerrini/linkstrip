@@ -19,7 +19,7 @@ icons:
 	@source .venv/bin/activate && python3 scripts/generate-icon.py
 	@iconutil -c icns assets/AppIcon.iconset -o assets/AppIcon.icns
 
-app: release icons
+app: release
 	@echo "Packaging $(APP_NAME).app ..."
 	@rm -rf $(APP_BUNDLE)
 	@mkdir -p $(APP_BUNDLE)/Contents/MacOS
@@ -34,6 +34,9 @@ app: release icons
 	@cp Sources/LinkStrip/fonts/*.ttf $(APP_BUNDLE)/Contents/Resources/
 	@codesign --sign - --force --deep --entitlements LinkStrip.entitlements $(APP_BUNDLE)
 	@echo "Created $(APP_BUNDLE)"
+
+app-with-icons: icons app
+	@echo "Packaged $(APP_NAME).app with regenerated icons"
 
 test:
 	swift test

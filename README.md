@@ -100,8 +100,11 @@ make build
 # Run tests
 make test
 
-# Build and package a release .app bundle (also regenerates the icon set)
+# Build and package a release .app bundle
 make app
+
+# If you changed the SVG sources and want to regenerate raster assets:
+make app-with-icons
 ```
 
 The release app is created at `.build/LinkStrip.app`. You can drag it to `/Applications`.
