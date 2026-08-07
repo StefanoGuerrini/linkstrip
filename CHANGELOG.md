@@ -5,6 +5,12 @@ All notable changes to LinkStrip will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.1] - 2026-08-07
+
+### Fixed
+- GitHub Actions release workflow now locates the universal binary produced by `swift build --arch arm64 --arch x86_64`.
+- Share extension is now built as a universal binary (arm64 + x86_64).
+
 ## [1.3.0] - 2026-08-07
 
 ### Added
