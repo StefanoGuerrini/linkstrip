@@ -13,7 +13,8 @@ let package = Package(
             name: "LinkStrip",
             dependencies: [],
             resources: [
-                .process("Resources")
+                .process("Resources"),
+                .copy("fonts")
             ],
             linkerSettings: [
                 .linkedFramework("ServiceManagement")

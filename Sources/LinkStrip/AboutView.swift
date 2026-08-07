@@ -9,9 +9,14 @@ struct AboutView: View {
                 .frame(width: 96, height: 96)
                 .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
 
-            Text("LinkStrip")
-                .font(.title)
-                .fontWeight(.semibold)
+            HStack(spacing: 0) {
+                Text("Link")
+                    .font(.custom("Space Grotesk", size: 28))
+                    .fontWeight(.regular)
+                Text("Strip")
+                    .font(.custom("Space Grotesk", size: 28))
+                    .fontWeight(.bold)
+            }
 
             Text("Version \(appVersion)")
                 .font(.subheadline)

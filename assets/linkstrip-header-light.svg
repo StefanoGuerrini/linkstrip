@@ -1,17 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 90" width="400" height="90">
-  <!-- Icon Mark (Dark Container for Contrast) -->
+  
   <g transform="translate(10, 10) scale(0.137)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <rect width="512" height="512" rx="112" fill="#0F172A"/>
-    <path d="M 230 208 H 190 A 48 48 0 0 0 142 256 A 48 48 0 0 0 190 304 H 230" stroke="#F8FAFC" stroke-width="36"/>
-    <path d="M 282 304 H 322 A 48 48 0 0 0 370 256 A 48 48 0 0 0 322 208 H 282" stroke="#F8FAFC" stroke-width="36"/>
-    <line x1="160" y1="352" x2="352" y2="160" stroke="#38BDF8" stroke-width="36"/>
+    <rect width="512" height="512" rx="112" fill="#0F172A" />
+    <path d="M 230 208 H 190 A 48 48 0 0 0 142 256 A 48 48 0 0 0 190 304 H 230" stroke="#F8FAFC" stroke-width="36" />
+    <path d="M 282 304 H 322 A 48 48 0 0 0 370 256 A 48 48 0 0 0 322 208 H 282" stroke="#F8FAFC" stroke-width="36" />
+    <line x1="160" y1="352" x2="352" y2="160" stroke="#38BDF8" stroke-width="36" />
   </g>
 
-  <!-- Dark Typography for Light Backgrounds -->
-  <text x="100" y="56" 
-        font-family="-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif" 
-        font-size="40" 
-        font-weight="700" 
-        fill="#0F172A" 
-        letter-spacing="-1">Link<tspan fill="#0284C7" font-weight="400">Strip</tspan></text>
-</svg>
+  
+  <path d="M80 0V700H164V76H518V0Z" fill="#0F172A" transform="translate(100.00, 56.00) scale(0.0400, -0.0400)" /><path d="M83 0V489H162V0ZM123 565Q97 565 79.5 582.0Q62 599 62 625Q62 652 79.5 669.0Q97 686 123 686Q149 686 166.0 669.0Q183 652 183 625Q183 599 166.0 582.0Q149 565 123 565Z" fill="#0F172A" transform="translate(121.84, 56.00) scale(0.0400, -0.0400)" /><path d="M83 0V489H160V406H174Q190 441 228.5 469.5Q267 498 342 498Q396 498 440.0 475.0Q484 452 510.0 406.5Q536 361 536 296V0H457V290Q457 363 420.5 396.0Q384 429 322 429Q252 429 207.0 382.5Q162 336 162 246V0Z" fill="#0F172A" transform="translate(131.64, 56.00) scale(0.0400, -0.0400)" /><path d="M83 0V700H162V288H176L400 489H510L239 251L518 0H409L176 213H162V0Z" fill="#0F172A" transform="translate(156.16, 56.00) scale(0.0400, -0.0400)" /><path d="M309 -14Q228 -14 166.0 15.0Q104 44 69.0 98.0Q34 152 34 228V256H164V228Q164 165 203.0 133.5Q242 102 309 102Q377 102 410.5 129.0Q444 156 444 198Q444 242 407.5 261.5Q371 281 303 296L280 301Q208 317 156.5 341.5Q105 366 77.5 406.0Q50 446 50 510Q50 606 117.5 660.0Q185 714 297 714Q372 714 430.5 688.5Q489 663 522.5 612.5Q556 562 556 486V456H426V486Q426 546 391.5 572.0Q357 598 297 598Q237 598 208.5 575.5Q180 553 180 514Q180 475 210.0 454.0Q240 433 303 419L326 414Q401 398 456.5 373.0Q512 348 543.0 307.0Q574 266 574 202Q574 138 541.5 89.5Q509 41 449.5 13.5Q390 -14 309 -14Z" fill="#0284C7" transform="translate(177.68, 56.00) scale(0.0400, -0.0400)" /><path d="M260 0Q211 0 180.5 30.5Q150 61 150 112V392H26V496H150V650H276V496H412V392H276V134Q276 104 304 104H400V0Z" fill="#0284C7" transform="translate(201.92, 56.00) scale(0.0400, -0.0400)" /><path d="M70 0V496H194V440H212Q223 470 248.5 484.0Q274 498 308 498H368V386H306Q258 386 227.0 360.5Q196 335 196 282V0Z" fill="#0284C7" transform="translate(220.16, 56.00) scale(0.0400, -0.0400)" /><path d="M70 0V496H196V0ZM133 554Q99 554 75.5 576.0Q52 598 52 634Q52 670 75.5 692.0Q99 714 133 714Q168 714 191.0 692.0Q214 670 214 634Q214 598 191.0 576.0Q168 554 133 554Z" fill="#0284C7" transform="translate(236.00, 56.00) scale(0.0400, -0.0400)" /><path d="M70 -200V496H194V436H212Q229 465 265.0 487.5Q301 510 368 510Q428 510 479.0 480.5Q530 451 561.0 394.0Q592 337 592 256V240Q592 159 561.0 102.0Q530 45 479.0 15.5Q428 -14 368 -14Q301 -14 265.5 8.5Q230 31 214 57H196V-200ZM330 96Q389 96 427.5 133.5Q466 171 466 243V253Q466 325 427.0 362.5Q388 400 330 400Q272 400 233.0 362.5Q194 325 194 253V243Q194 171 233.0 133.5Q272 96 330 96Z" fill="#0284C7" transform="translate(246.64, 56.00) scale(0.0400, -0.0400)" /></svg>

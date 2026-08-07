@@ -16,6 +16,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
+        FontManager.registerBundledFonts()
 
         BrowserRouter.shared.recordCurrentBrowser()
         appState = AppState()

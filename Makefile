@@ -31,6 +31,7 @@ app: release icons
 	@cp assets/AppIcon.icns $(APP_BUNDLE)/Contents/Resources/AppIcon.icns
 	@cp assets/MenuBarIcon.png $(APP_BUNDLE)/Contents/Resources/MenuBarIcon.png
 	@cp assets/MenuBarIcon@2x.png $(APP_BUNDLE)/Contents/Resources/MenuBarIcon@2x.png
+	@cp Sources/LinkStrip/fonts/*.ttf $(APP_BUNDLE)/Contents/Resources/
 	@codesign --sign - --force --deep --entitlements LinkStrip.entitlements $(APP_BUNDLE)
 	@echo "Created $(APP_BUNDLE)"
 
