@@ -39,6 +39,11 @@ jobs:
       - name: Verify codesign
         run: codesign --verify --deep --strict .build/LinkStrip.app
 
+      - name: Build Firefox extension
+        run: |
+          python3 -m pip install Pillow
+          make firefox-extension
+
       - name: Zip .app bundle
         run: |
           cd .build
@@ -47,7 +52,9 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: .build/LinkStrip.app.zip
+          files: |
+            .build/LinkStrip.app.zip
+            .build/linkstrip-firefox-*.zip
           generate_release_notes: true
           draft: true
           prerelease: false
