@@ -36,25 +36,33 @@ def copy_rules() -> None:
     shutil.copy(RULES_SOURCE, ROOT / "tracking-params.json")
 
 
-def package() -> Path:
+def package() -> list[Path]:
     manifest = json.loads((ROOT / "manifest.json").read_text())
     version = manifest["version"]
-    output = PROJECT_ROOT / ".build" / f"linkstrip-firefox-{version}.zip"
-    output.parent.mkdir(parents=True, exist_ok=True)
+    PROJECT_ROOT.joinpath(".build").mkdir(parents=True, exist_ok=True)
 
+    zip_output = PROJECT_ROOT / ".build" / f"linkstrip-firefox-{version}.zip"
+    xpi_output = PROJECT_ROOT / ".build" / f"linkstrip-firefox-{version}.xpi"
+
+    _write_archive(zip_output)
+    _write_archive(xpi_output)
+
+    return [zip_output, xpi_output]
+
+
+def _write_archive(output: Path) -> None:
     with zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED) as archive:
         for path in ROOT.rglob("*"):
-            if path.is_file() and path.name != "build-extension.py" and "__pycache__" not in path.parts:
+            if path.is_file() and path.name not in ("build-extension.py",) and "__pycache__" not in path.parts:
                 archive.write(path, path.relative_to(ROOT))
-
-    return output
 
 
 def main() -> None:
     generate_icons()
     copy_rules()
-    output = package()
-    print(f"Packaged Firefox extension: {output}")
+    outputs = package()
+    for output in outputs:
+        print(f"Packaged Firefox extension: {output}")
 
 
 if __name__ == "__main__":

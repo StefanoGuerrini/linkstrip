@@ -12,12 +12,11 @@ A Firefox extension that removes tracking parameters from links, matching the be
 
 1. Build the extension:
    ```bash
-   cd extensions/firefox
-   python3 build-extension.py
+   make firefox-extension
    ```
 2. Open Firefox and go to `about:debugging#/runtime/this-firefox`.
 3. Click **Load Temporary Add-on…**.
-4. Select `.build/linkstrip-firefox-1.3.2.zip`.
+4. Select `.build/linkstrip-firefox-<version>.zip` or `.build/linkstrip-firefox-<version>.xpi`.
 
 ## Files
 
