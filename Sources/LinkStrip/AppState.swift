@@ -6,6 +6,8 @@ import SwiftUI
 /// Central application state that wires the cleaner, monitor, history,
 /// notifications, and preferences together.
 final class AppState: ObservableObject {
+    static weak var shared: AppState?
+
     @Published var lastCleaned: String?
     @Published var cleaner: URLCleaner
 
@@ -23,6 +25,7 @@ final class AppState: ObservableObject {
             customParameters: PreferencesManager.shared.customParameters
         )
         self.cleaner = cleaner
+        AppState.shared = self
 
         NotificationManager.shared.requestAuthorization()
         bindPreferences()

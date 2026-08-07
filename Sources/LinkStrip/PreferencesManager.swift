@@ -4,6 +4,7 @@ import Foundation
 enum PreferenceKey: String {
     case cleanCopiedLinks
     case cleanRedirectLinks
+    case cleanLinksOnOpen
     case notificationsEnabled
     case launchAtLoginEnabled
     case customParameters
@@ -21,6 +22,10 @@ final class PreferencesManager: ObservableObject {
 
     @Published var cleanRedirectLinks: Bool {
         didSet { defaults.set(cleanRedirectLinks, forKey: PreferenceKey.cleanRedirectLinks.rawValue) }
+    }
+
+    @Published var cleanLinksOnOpen: Bool {
+        didSet { defaults.set(cleanLinksOnOpen, forKey: PreferenceKey.cleanLinksOnOpen.rawValue) }
     }
 
     @Published var notificationsEnabled: Bool {
@@ -46,6 +51,7 @@ final class PreferencesManager: ObservableObject {
         self.defaults = defaults
         self.cleanCopiedLinks = defaults.object(forKey: PreferenceKey.cleanCopiedLinks.rawValue) as? Bool ?? true
         self.cleanRedirectLinks = defaults.object(forKey: PreferenceKey.cleanRedirectLinks.rawValue) as? Bool ?? true
+        self.cleanLinksOnOpen = defaults.object(forKey: PreferenceKey.cleanLinksOnOpen.rawValue) as? Bool ?? false
         self.notificationsEnabled = defaults.object(forKey: PreferenceKey.notificationsEnabled.rawValue) as? Bool ?? true
         self.launchAtLoginEnabled = defaults.object(forKey: PreferenceKey.launchAtLoginEnabled.rawValue) as? Bool ?? false
         self.customParameters = defaults.object(forKey: PreferenceKey.customParameters.rawValue) as? [String] ?? []
@@ -58,6 +64,7 @@ final class PreferencesManager: ObservableObject {
     func restoreDefaults() {
         cleanCopiedLinks = true
         cleanRedirectLinks = true
+        cleanLinksOnOpen = false
         notificationsEnabled = true
         launchAtLoginEnabled = false
         customParameters = []

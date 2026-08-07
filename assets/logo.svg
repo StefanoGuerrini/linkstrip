@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Solid Background -->
+  <rect width="512" height="512" rx="112" fill="#0F172A"/>
+
+  <!-- Geometric Link + Strip Cut -->
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Left Link Loop -->
+    <path d="M 230 208 H 190 A 48 48 0 0 0 142 256 A 48 48 0 0 0 190 304 H 230" 
+          stroke="#F8FAFC" 
+          stroke-width="32"/>
+
+    <!-- Right Link Loop -->
+    <path d="M 282 304 H 322 A 48 48 0 0 0 370 256 A 48 48 0 0 0 322 208 H 282" 
+          stroke="#F8FAFC" 
+          stroke-width="32"/>
+
+    <!-- Precision Strip Slash -->
+    <line x1="160" y1="352" x2="352" y2="160" 
+          stroke="#06B6D4" 
+          stroke-width="32"/>
+  </g>
+</svg>

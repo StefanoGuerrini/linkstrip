@@ -1,8 +1,6 @@
 <p align="center">
-  <img src="assets/logo.png" width="128" height="128" alt="LinkStrip icon">
+  <img src="assets/header.png" width="400" height="90" alt="LinkStrip">
 </p>
-
-<h1 align="center">LinkStrip</h1>
 
 <p align="center">
   A privacy-first, minimalistic macOS menu-bar app that automatically removes tracking parameters from URLs copied to the clipboard.
@@ -20,7 +18,8 @@
 
 - **Silent clipboard monitor** – sits in the menu bar and cleans links as soon as they are copied.
 - **Redirect-link unwrapping** – extracts real destinations from click-tracking services like `link.fndrsp.net`.
-- **Two independent toggles** – enable or disable cleaning for copied links and redirect links separately.
+- **Clean clicked links** *(optional)* – set LinkStrip as the default browser; clicked links are cleaned and forwarded to your real browser.
+- **Three independent toggles** – enable or disable cleaning for copied links, redirect links, and clicked links separately.
 - **Local rule engine** – bundled `tracking-params.json`; no network calls, ever.
 - **Editable rules** – add custom parameters, view the bundled defaults, or import/export your own JSON rule sets.
 - **History** – keeps the last 100 cleaned URLs locally in `~/Library/Application Support/LinkStrip/history.json`.
@@ -69,6 +68,18 @@ Add your own in **Preferences → Custom Tracking Parameters**.
 Download the latest release from [GitHub Releases](https://github.com/StefanoGuerrini/LinkStrip/releases), drag `LinkStrip.app` to `/Applications`, and launch it.
 
 Because the release builds are code-signed but notarized releases may still trigger Gatekeeper on first run, right-click the app and choose **Open** if macOS warns you.
+
+## Cleaning clicked links
+
+By default LinkStrip only watches the clipboard. To clean links when you click them in Mail, Notes, or anywhere else:
+
+1. Open LinkStrip Preferences.
+2. Enable **Clean links when clicked**.
+3. LinkStrip becomes the default browser, intercepts every clicked `http`/`https` URL, cleans it, and forwards it to your previously selected browser.
+
+To stop, simply disable the toggle; LinkStrip restores your previous default browser.
+
+> **Note:** This requires the app to be in `/Applications` and may need to be allowed in **System Settings → General → Login Items & Extensions**.
 
 ## Build from source
 
@@ -127,7 +138,7 @@ Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines
 ## Credits
 
 - Created by [Stefano Guerrini](https://github.com/StefanoGuerrini)
-- App icon and logo generated with Pillow
+- Logo, menu-bar icon, and header by Stefano Guerrini
 - MIT Licensed
 
 ## Privacy

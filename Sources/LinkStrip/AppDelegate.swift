@@ -25,4 +25,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // Keep running in the menu bar when the user closes a settings/history window.
         false
     }
+
+    func application(_ application: NSApplication, open urls: [URL]) {
+        for url in urls {
+            BrowserRouter.shared.handle(url)
+        }
+    }
 }

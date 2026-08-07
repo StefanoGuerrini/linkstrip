@@ -16,6 +16,18 @@ struct PreferencesView: View {
                 Toggle("Show notifications", isOn: $appState.preferences.notificationsEnabled)
             }
 
+            Section("Clicks") {
+                Toggle("Clean links when clicked", isOn: $appState.preferences.cleanLinksOnOpen)
+                    .help("Set LinkStrip as the default browser, clean clicked links, then forward them to your real browser.")
+
+                if appState.preferences.cleanLinksOnOpen,
+                   let browser = BrowserRouter.shared.savedBrowserBundleID {
+                    Text("Links will open in \(browser)")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
+
             Section("General") {
                 Toggle("Launch at login", isOn: $appState.preferences.launchAtLoginEnabled)
                     .help("Requires a bundled, code-signed app for macOS to honor the login item.")
