@@ -13,8 +13,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Select latest Xcode
+        run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+
       - name: Show toolchain version
-        run: swift --version
+        run: |
+          xcodebuild -version
+          swift --version
 
       - name: Build
         run: swift build
@@ -24,6 +29,15 @@ jobs:
 
       - name: Package release .app
         run: make app
+
+      - name: Verify bundle contents
+        run: |
+          test -d .build/LinkStrip.app/Contents/PlugIns/LinkStripShareExtension.appex
+          file .build/LinkStrip.app/Contents/MacOS/LinkStrip
+          file .build/LinkStrip.app/Contents/PlugIns/LinkStripShareExtension.appex/Contents/MacOS/LinkStripShareExtension
+
+      - name: Verify codesign
+        run: codesign --verify --deep --strict .build/LinkStrip.app
 
       - name: Upload .app artifact
         uses: actions/upload-artifact@v4

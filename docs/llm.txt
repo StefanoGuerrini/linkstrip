@@ -1,0 +1,60 @@
+# LinkStrip
+
+LinkStrip is a privacy-first, open-source macOS menu-bar application that removes tracking parameters from URLs copied to the clipboard.
+
+## Key facts
+
+- Platform: macOS 13 Ventura and later (Apple Silicon & Intel)
+- License: MIT
+- Repository: https://github.com/StefanoGuerrini/LinkStrip
+- Author: Stefano Guerrini
+- Language/Framework: Swift 5.9+, SwiftUI for UI, AppKit for menu bar
+- Distribution: GitHub Releases as a signed .app bundle
+
+## Core features
+
+- Clipboard monitor: polls NSPasteboard every 0.5s using changeCount and rewrites the clipboard when a tracked URL is detected.
+- Rule engine: bundled `tracking-params.json` loaded at launch; no network calls.
+- Custom rules: users can add custom parameters and import/export JSON rule sets.
+- Redirect unwrapping: extracts destination URLs from click-tracking services such as `link.fndrsp.net`.
+- History: keeps the last 100 cleaned URLs in `~/Library/Application Support/LinkStrip/history.json`.
+- Notifications: native UserNotifications banner when a link is cleaned (toggle in preferences).
+- Launch at login: uses SMAppService (requires code-signed app bundle).
+- Click cleaning (optional): when the user manually sets LinkStrip as the default browser in System Settings, clicked http/https URLs are intercepted, cleaned, and forwarded to the previously selected browser.
+- Share extension: right-click any link → Share → LinkStrip cleans the URL and copies it to the clipboard without changing the default browser.
+- Menu-bar indicator: a small dot appears on the menu-bar icon while LinkStrip is the default browser.
+- Restore previous browser: Preferences caches the previous default browser and offers a one-click restore button.
+
+## Default tracking parameters
+
+affiliate, cmpid, dclid, emailLog, fbclid, feature, gbraid, gclid, irclickid, itm_campaign, itm_content, itm_medium, itm_source, itm_term, mc_cid, ocid, ref_src, ref_url, si, trackingId, trk, ttclid, utm_campaign, utm_content, utm_medium, utm_source, utm_term, wbraid, wickedid
+
+## Build
+
+```bash
+make build      # debug build
+make test       # run unit tests
+make app        # package release .app using committed assets
+make app-with-icons  # regenerate icons from SVGs and package
+```
+
+## Architecture
+
+- AppDelegate: app lifecycle, menu-bar-only activation, font registration.
+- AppState: wires preferences, cleaner, monitor, history, notifications, browser router.
+- ClipboardMonitor: lightweight pasteboard polling.
+- URLCleaner: strips tracking query parameters and unwraps redirect links.
+- PreferencesManager: UserDefaults wrapper.
+- HistoryManager: local JSON persistence.
+- NotificationManager: UserNotifications.
+- BrowserRouter: default-browser routing for click cleaning.
+- MenuBarController: NSStatusItem, dropdown menu, default-browser indicator.
+- LaunchAtLoginManager: SMAppService registration.
+- FontManager: registers bundled Space Grotesk font.
+
+## Privacy
+
+- No network access.
+- No analytics or telemetry.
+- Clipboard data is inspected locally and never transmitted.
+- Only original and cleaned URLs are stored locally in the history file.

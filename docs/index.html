@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkStrip — Privacy-first link cleaner for macOS</title>
+    <meta name="description" content="LinkStrip is a minimal macOS menu-bar app that automatically removes tracking parameters from copied URLs.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0B1120;
+            --surface: #151F32;
+            --text: #F8FAFC;
+            --muted: #94A3B8;
+            --accent: #06B6D4;
+            --accent-hover: #22D3EE;
+            --border: #1E293B;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .logo {
+            width: 112px;
+            height: 112px;
+            margin-bottom: 24px;
+            border-radius: 28px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 500;
+            letter-spacing: -0.04em;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 span {
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--muted);
+            max-width: 520px;
+            margin: 0 auto 32px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: transform 0.15s ease, background 0.15s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            margin-bottom: 80px;
+        }
+
+        .feature {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+        }
+
+        .feature h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--accent);
+        }
+
+        .feature p {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .section {
+            margin-bottom: 64px;
+        }
+
+        .section h2 {
+            font-size: 1.75rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .section p, .section li {
+            color: var(--muted);
+            margin-bottom: 12px;
+        }
+
+        .section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .section li::before {
+            content: "—";
+            color: var(--accent);
+            margin-right: 10px;
+        }
+
+        code {
+            background: var(--surface);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.9em;
+        }
+
+        .footer {
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.9rem;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 2.25rem;
+            }
+            .hero p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="hero">
+            <img src="https://raw.githubusercontent.com/StefanoGuerrini/LinkStrip/main/assets/logo.png" alt="LinkStrip" class="logo">
+            <h1>Link<span>Strip</span></h1>
+            <p>A privacy-first macOS menu-bar app that automatically removes tracking parameters from URLs you copy.</p>
+            <div class="buttons">
+                <a href="https://github.com/StefanoGuerrini/LinkStrip/releases/latest" class="btn btn-primary">Download for macOS</a>
+                <a href="https://github.com/StefanoGuerrini/LinkStrip" class="btn btn-secondary">View on GitHub</a>
+            </div>
+        </header>
+
+        <section class="features">
+            <div class="feature">
+                <h3>Clipboard cleaning</h3>
+                <p>Monitors the clipboard in the background and strips tracking parameters the moment a URL is copied.</p>
+            </div>
+            <div class="feature">
+                <h3>Redirect unwrapping</h3>
+                <p>Extracts the real destination from click-tracking links like <code>link.fndrsp.net</code>.</p>
+            </div>
+            <div class="feature">
+                <h3>Editable rules</h3>
+                <p>Ships with 29 default tracking parameters. Add your own or import/export custom rule sets.</p>
+            </div>
+            <div class="feature">
+                <h3>Share extension</h3>
+                <p>Right-click any link → Share → LinkStrip to clean it without changing your default browser.</p>
+            </div>
+            <div class="feature">
+                <h3>Offline & private</h3>
+                <p>No network access, no analytics, no telemetry. Everything stays on your Mac.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>How it works</h2>
+            <ul>
+                <li>Copy any link to your clipboard.</li>
+                <li>LinkStrip detects the change and removes known tracking parameters.</li>
+                <li>The cleaned URL is written back to the clipboard, ready to paste.</li>
+                <li>Or right-click a link → Share → LinkStrip to clean without changing your default browser.</li>
+                <li>Optionally clean clicked links by setting LinkStrip as your default browser.</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>Open source</h2>
+            <p>LinkStrip is released under the MIT License. Build it yourself with <code>make app</code> or grab the latest release from GitHub.</p>
+        </section>
+
+        <footer class="footer">
+            <p>Created by <a href="https://github.com/StefanoGuerrini">Stefano Guerrini</a> · <a href="https://github.com/StefanoGuerrini/LinkStrip/blob/main/LICENSE">MIT License</a></p>
+        </footer>
+    </div>
+</body>
+</html>

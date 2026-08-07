@@ -9,7 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Optional "Clean links when clicked" mode. LinkStrip can register itself as the default browser, clean clicked http/https URLs, and forward them to the user's real browser.
+- Default-browser intelligence: caches the previous default browser, shows a "Restore Previous Browser" button in Preferences, and displays a dot on the menu-bar icon while LinkStrip is the default browser.
+- Built-in Share extension: right-click any link → Share → LinkStrip cleans the URL and copies it to the clipboard without changing the default browser.
 - Custom monochrome menu-bar template icon based on the app logo.
+- Landing page (`docs/index.html`) and `docs/llm.txt` for discoverability.
+- `PUBLISHING.md` guide covering GitHub Releases, Mac App Store, Homebrew Cask, signing, and notarization.
 
 ## [1.1.0] - 2026-08-07
 

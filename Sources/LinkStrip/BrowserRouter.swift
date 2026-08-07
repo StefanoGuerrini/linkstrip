@@ -1,4 +1,5 @@
 import AppKit
+import CoreServices
 import Foundation
 
 /// Routes http/https links through LinkStrip when the user has manually set
@@ -37,13 +38,49 @@ final class BrowserRouter {
     }
 
     /// Records the current default browser so clicked links can be forwarded
-    /// to it. Call this once at launch.
+    /// to it. Call this once at launch and whenever the user enables click cleaning.
     func recordCurrentBrowser() {
         guard let browserID = currentDefaultBrowserBundleID,
               browserID != Bundle.main.bundleIdentifier else {
             return
         }
         savedBrowserBundleID = browserID
+    }
+
+    /// Attempts to restore the previously saved default browser. Because modern
+    /// macOS protects the https handler, this may fail silently; if so, System
+    /// Settings is opened so the user can change it manually.
+    func restorePreviousBrowser() {
+        guard let browserID = savedBrowserBundleID,
+              let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: browserID) else {
+            openDefaultBrowserSettings()
+            return
+        }
+
+        var restored = true
+        let group = DispatchGroup()
+        for scheme in ["http", "https"] {
+            group.enter()
+            NSWorkspace.shared.setDefaultApplication(at: appURL, toOpenURLsWithScheme: scheme) { error in
+                if let error = error {
+                    NSLog("Failed to restore \(scheme) default: \(error)")
+                    restored = false
+                }
+                group.leave()
+            }
+        }
+        group.wait()
+
+        if !restored {
+            openDefaultBrowserSettings()
+        }
+    }
+
+    private func openDefaultBrowserSettings() {
+        guard let url = URL(string: "x-apple.systempreferences:com.apple.Desktop-Settings.extension?DefaultBrowser") else {
+            return
+        }
+        NSWorkspace.shared.open(url)
     }
 
     /// Cleans the clicked URL (if the preference is enabled) and opens it in

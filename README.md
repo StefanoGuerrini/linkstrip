@@ -23,6 +23,7 @@
 - **Silent clipboard monitor** – sits in the menu bar and cleans links as soon as they are copied.
 - **Redirect-link unwrapping** – extracts real destinations from click-tracking services like `link.fndrsp.net`.
 - **Clean clicked links** *(optional)* – set LinkStrip as the default browser; clicked links are cleaned and forwarded to your real browser.
+- **Share extension** – right-click any link → Share → LinkStrip to clean it without changing your default browser.
 - **Three independent toggles** – enable or disable cleaning for copied links, redirect links, and clicked links separately.
 - **Local rule engine** – bundled `tracking-params.json`; no network calls, ever.
 - **Editable rules** – add custom parameters, view the bundled defaults, or import/export your own JSON rule sets.
@@ -71,7 +72,7 @@ Add your own in **Preferences → Custom Tracking Parameters**.
 
 Download the latest release from [GitHub Releases](https://github.com/StefanoGuerrini/LinkStrip/releases), drag `LinkStrip.app` to `/Applications`, and launch it.
 
-Because the release builds are code-signed but notarized releases may still trigger Gatekeeper on first run, right-click the app and choose **Open** if macOS warns you.
+Unsigned development builds and ad-hoc signed releases may trigger Gatekeeper. Right-click the app and choose **Open** if macOS warns you. Official releases should be signed with a Developer ID and notarized before distribution. See [PUBLISHING.md](PUBLISHING.md) for details.
 
 ## Cleaning clicked links
 
@@ -81,9 +82,19 @@ By default LinkStrip only watches the clipboard. To clean links when you click t
 2. Open LinkStrip Preferences and enable **Clean links when clicked**.
 3. LinkStrip intercepts every clicked `http`/`https` URL, cleans it, and forwards it to your previously selected browser.
 
-To stop, set your previous browser back as the default in System Settings.
+When you enable click cleaning, LinkStrip remembers your previous default browser and shows a **Restore Previous Browser** button in Preferences. The menu-bar icon also displays a small dot while LinkStrip is the default browser, so you don't forget.
 
 > **Note:** macOS does not allow apps to change the default browser automatically, so this step must be done manually in System Settings.
+
+## Share extension
+
+If you prefer not to change your default browser, use the built-in Share extension:
+
+1. Right-click any link in Mail, Safari, Notes, or most other apps.
+2. Choose **Share → LinkStrip**.
+3. The cleaned URL is copied to your clipboard.
+
+The Share extension is included in `LinkStrip.app/Contents/PlugIns/LinkStripShareExtension.appex` and is registered automatically when the app is first launched.
 
 ## Build from source
 
@@ -133,6 +144,10 @@ Run tests with:
 ```bash
 make test
 ```
+
+## Publishing
+
+LinkStrip can be distributed through GitHub Releases, the Mac App Store, or Homebrew Cask. Each channel has different trade-offs. See [PUBLISHING.md](PUBLISHING.md) for a full guide.
 
 ## Version history
 

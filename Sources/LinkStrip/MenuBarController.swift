@@ -17,28 +17,23 @@ final class MenuBarController: NSObject {
     private let aboutMenuItem = NSMenuItem(title: "About LinkStrip", action: #selector(openAbout), keyEquivalent: "")
     private let quitMenuItem = NSMenuItem(title: "Quit", action: #selector(quit), keyEquivalent: "q")
 
+    private var defaultBrowserCheckTimer: Timer?
+
     init(appState: AppState) {
         self.appState = appState
         super.init()
         setupStatusItem()
         bindAppState()
+        startDefaultBrowserCheck()
+    }
+
+    deinit {
+        defaultBrowserCheckTimer?.invalidate()
     }
 
     private func setupStatusItem() {
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-
-        // Prefer the custom template icon bundled in the app; fall back to the
-        // system link symbol if it is missing.
-        if let iconURL = Bundle.main.url(forResource: "MenuBarIcon", withExtension: "png"),
-           let image = NSImage(contentsOf: iconURL) {
-            image.isTemplate = true
-            item.button?.image = image
-        } else {
-            item.button?.image = NSImage(
-                systemSymbolName: "link",
-                accessibilityDescription: "LinkStrip"
-            )
-        }
+        updateStatusItemImage(item)
         item.button?.imageScaling = .scaleProportionallyDown
 
         let menu = NSMenu()
@@ -80,6 +75,32 @@ final class MenuBarController: NSObject {
                 }
             }
             .store(in: &cancellables)
+    }
+
+    private func startDefaultBrowserCheck() {
+        defaultBrowserCheckTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { [weak self] _ in
+            self?.updateStatusItemImage(self?.statusItem)
+        }
+    }
+
+    private func updateStatusItemImage(_ item: NSStatusItem?) {
+        guard let item = item else { return }
+
+        let baseImage: NSImage
+        if let iconURL = Bundle.main.url(forResource: "MenuBarIcon", withExtension: "png"),
+           let image = NSImage(contentsOf: iconURL) {
+            baseImage = image
+        } else {
+            baseImage = NSImage(systemSymbolName: "link", accessibilityDescription: "LinkStrip")!
+        }
+
+        let isDefault = BrowserRouter.shared.isLinkStripDefaultBrowser
+        let image = isDefault ? baseImage.withIndicatorDot() : baseImage
+        image.isTemplate = true
+        item.button?.image = image
+        item.button?.toolTip = isDefault
+            ? "LinkStrip is the default browser"
+            : "LinkStrip"
     }
 
     @objc private func openHistory() {

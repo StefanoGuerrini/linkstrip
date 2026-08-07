@@ -25,7 +25,12 @@ final class PreferencesManager: ObservableObject {
     }
 
     @Published var cleanLinksOnOpen: Bool {
-        didSet { defaults.set(cleanLinksOnOpen, forKey: PreferenceKey.cleanLinksOnOpen.rawValue) }
+        didSet {
+            defaults.set(cleanLinksOnOpen, forKey: PreferenceKey.cleanLinksOnOpen.rawValue)
+            if cleanLinksOnOpen {
+                BrowserRouter.shared.recordCurrentBrowser()
+            }
+        }
     }
 
     @Published var notificationsEnabled: Bool {
