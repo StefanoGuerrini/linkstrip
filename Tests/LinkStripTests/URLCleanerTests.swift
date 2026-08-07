@@ -76,7 +76,7 @@ final class URLCleanerTests: XCTestCase {
     }
 
     func testCleanRedirectExtractsEncodedDestinationFromPath() {
-        let input = "https://link.fndrsp.net/CL0/https:%2F%2Fexample.com%2Fpage%3Futm_source%3Dnewsletter%26emailLog%3Dabc/1/0100019fdc55b137/O_ycuXgrQ5eekmWOYczw"
+        let input = "https://link.fndrsp.net/CL0/https:%2F%2Fexample.com%2Fpage%3Futm_source%3Dnewsletter%26fbclid%3Dabc/1/0100019fdc55b137/O_ycuXgrQ5eekmWOYczw"
         XCTAssertEqual(
             cleaner.cleanRedirect(input),
             "https://example.com/page"
