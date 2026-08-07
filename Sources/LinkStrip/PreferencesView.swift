@@ -18,7 +18,11 @@ struct PreferencesView: View {
 
             Section("Clicks") {
                 Toggle("Clean links when clicked", isOn: $appState.preferences.cleanLinksOnOpen)
-                    .help("Set LinkStrip as the default browser, clean clicked links, then forward them to your real browser.")
+                    .help("Requires setting LinkStrip as the default browser in System Settings.")
+
+                Text("To clean clicked links, set LinkStrip as the default web browser in System Settings → Desktop & Dock, enable this toggle, and LinkStrip will forward cleaned links to your previously selected browser.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
 
                 if appState.preferences.cleanLinksOnOpen,
                    let browser = BrowserRouter.shared.savedBrowserBundleID {

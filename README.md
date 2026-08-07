@@ -73,13 +73,13 @@ Because the release builds are code-signed but notarized releases may still trig
 
 By default LinkStrip only watches the clipboard. To clean links when you click them in Mail, Notes, or anywhere else:
 
-1. Open LinkStrip Preferences.
-2. Enable **Clean links when clicked**.
-3. LinkStrip becomes the default browser, intercepts every clicked `http`/`https` URL, cleans it, and forwards it to your previously selected browser.
+1. Open **System Settings → Desktop & Dock → Default web browser** and select **LinkStrip**.
+2. Open LinkStrip Preferences and enable **Clean links when clicked**.
+3. LinkStrip intercepts every clicked `http`/`https` URL, cleans it, and forwards it to your previously selected browser.
 
-To stop, simply disable the toggle; LinkStrip restores your previous default browser.
+To stop, set your previous browser back as the default in System Settings.
 
-> **Note:** This requires the app to be in `/Applications` and may need to be allowed in **System Settings → General → Login Items & Extensions**.
+> **Note:** macOS does not allow apps to change the default browser automatically, so this step must be done manually in System Settings.
 
 ## Build from source
 

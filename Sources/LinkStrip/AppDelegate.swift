@@ -17,6 +17,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
 
+        BrowserRouter.shared.recordCurrentBrowser()
         appState = AppState()
         menuBarController = MenuBarController(appState: appState)
     }
