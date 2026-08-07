@@ -105,7 +105,7 @@ app-with-icons: icons app
 	@echo "Packaged $(APP_NAME).app with regenerated icons"
 
 firefox-extension:
-	@source .venv/bin/activate && python3 extensions/firefox/build-extension.py
+	@python3 extensions/firefox/build-extension.py
 
 test:
 	swift test
