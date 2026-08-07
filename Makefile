@@ -29,6 +29,8 @@ app: release icons
 	@cp LinkStrip.entitlements $(APP_BUNDLE)/Contents/Resources/
 	@cp Sources/LinkStrip/Resources/tracking-params.json $(APP_BUNDLE)/Contents/Resources/tracking-params.json
 	@cp assets/AppIcon.icns $(APP_BUNDLE)/Contents/Resources/AppIcon.icns
+	@cp assets/MenuBarIcon.png $(APP_BUNDLE)/Contents/Resources/MenuBarIcon.png
+	@cp assets/MenuBarIcon@2x.png $(APP_BUNDLE)/Contents/Resources/MenuBarIcon@2x.png
 	@codesign --sign - --force --deep --entitlements LinkStrip.entitlements $(APP_BUNDLE)
 	@echo "Created $(APP_BUNDLE)"
 

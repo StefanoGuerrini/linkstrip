@@ -88,7 +88,7 @@ def draw_chain_link(draw, center, radius, thickness, color):
 
 
 def generate_master_icon():
-    """Render the icon at a very high resolution for smooth downsampling."""
+    """Render the app icon at a very high resolution for smooth downsampling."""
     size = MASTER_SIZE
     img = Image.new("RGBA", (size, size), (0, 0, 0, 0))
 
@@ -124,6 +124,47 @@ def generate_master_icon():
     return img
 
 
+def draw_menu_bar_link(draw, center, size, color):
+    """Draw a bold, simplified chain-link symbol suitable for the menu bar."""
+    cx, cy = center
+    stroke = max(3, size // 7)
+    pad = size * 0.18
+    w = size * 0.32
+    h = size * 0.55
+
+    # Two overlapping rounded rectangles rotated 45 degrees.
+    for dx, dy in [(-pad, pad), (pad, -pad)]:
+        rect = (
+            cx + dx - w // 2,
+            cy + dy - h // 2,
+            cx + dx + w // 2,
+            cy + dy + h // 2,
+        )
+        # Draw the outline as a thick polygon.
+        points = [
+            (rect[0] + stroke, rect[1]),
+            (rect[2] - stroke, rect[1]),
+            (rect[2], rect[1] + stroke),
+            (rect[2], rect[3] - stroke),
+            (rect[2] - stroke, rect[3]),
+            (rect[0] + stroke, rect[3]),
+            (rect[0], rect[3] - stroke),
+            (rect[0], rect[1] + stroke),
+        ]
+        draw.polygon(points, fill=color)
+
+
+def generate_menu_bar_icon(size):
+    """Render a monochrome menu-bar template icon (bold chain link on transparent)."""
+    img = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(img)
+
+    center = (size // 2, size // 2)
+    draw_menu_bar_link(draw, center, size, (255, 255, 255, 255))
+
+    return img
+
+
 def main():
     ASSETS_DIR.mkdir(exist_ok=True)
     ICONSET_DIR.mkdir(exist_ok=True)
@@ -132,6 +173,8 @@ def main():
     for f in ICONSET_DIR.glob("*.png"):
         f.unlink()
     for f in ASSETS_DIR.glob("logo.png"):
+        f.unlink()
+    for f in ASSETS_DIR.glob("MenuBarIcon*.png"):
         f.unlink()
 
     print("Rendering master icon...")
@@ -144,8 +187,15 @@ def main():
     logo = master.resize((1024, 1024), Image.Resampling.LANCZOS)
     logo.save(ASSETS_DIR / "logo.png", "PNG")
 
+    print("Rendering menu bar icon...")
+    menu_bar_1x = generate_menu_bar_icon(22)
+    menu_bar_1x.save(ASSETS_DIR / "MenuBarIcon.png", "PNG")
+    menu_bar_2x = generate_menu_bar_icon(44)
+    menu_bar_2x.save(ASSETS_DIR / "MenuBarIcon@2x.png", "PNG")
+
     print(f"Generated icon set in {ICONSET_DIR}")
     print(f"Generated README logo at {ASSETS_DIR / 'logo.png'}")
+    print(f"Generated menu bar icons at {ASSETS_DIR / 'MenuBarIcon.png'}")
 
 
 if __name__ == "__main__":

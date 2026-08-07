@@ -26,10 +26,19 @@ final class MenuBarController: NSObject {
 
     private func setupStatusItem() {
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        item.button?.image = NSImage(
-            systemSymbolName: "link",
-            accessibilityDescription: "LinkStrip"
-        )
+
+        // Prefer the custom template icon bundled in the app; fall back to the
+        // system link symbol if it is missing.
+        if let iconURL = Bundle.main.url(forResource: "MenuBarIcon", withExtension: "png"),
+           let image = NSImage(contentsOf: iconURL) {
+            image.isTemplate = true
+            item.button?.image = image
+        } else {
+            item.button?.image = NSImage(
+                systemSymbolName: "link",
+                accessibilityDescription: "LinkStrip"
+            )
+        }
         item.button?.imageScaling = .scaleProportionallyDown
 
         let menu = NSMenu()
