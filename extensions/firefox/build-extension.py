@@ -20,10 +20,21 @@ ICONS = {
 
 
 def generate_icons() -> None:
+    """Generate extension icons from the app logo.
+
+    If Pillow is available, icons are regenerated. Otherwise, existing icons are
+    reused as long as all required sizes are present.
+    """
     try:
         from PIL import Image
-    except ImportError as error:
-        raise RuntimeError("Pillow is required to generate icons") from error
+    except ImportError:
+        if all(path.exists() for path in ICONS.values()):
+            print("Pillow not available; reusing existing icons")
+            return
+        raise RuntimeError(
+            "Pillow is required to generate icons, or place the icon files at: "
+            + ", ".join(str(p) for p in ICONS.values())
+        )
 
     logo = Image.open(ASSETS_DIR / "logo.png").convert("RGBA")
     for size, path in ICONS.items():

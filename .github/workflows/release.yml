@@ -40,9 +40,7 @@ jobs:
         run: codesign --verify --deep --strict .build/LinkStrip.app
 
       - name: Build Firefox extension
-        run: |
-          python3 -m pip install Pillow
-          make firefox-extension
+        run: make firefox-extension
 
       - name: Zip .app bundle
         run: |
