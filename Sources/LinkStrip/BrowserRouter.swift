@@ -53,7 +53,7 @@ final class BrowserRouter {
     func restorePreviousBrowser() {
         guard let browserID = savedBrowserBundleID,
               let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: browserID) else {
-            openDefaultBrowserSettings()
+            openSystemSettingsForDefaultBrowser()
             return
         }
 
@@ -72,11 +72,14 @@ final class BrowserRouter {
         group.wait()
 
         if !restored {
-            openDefaultBrowserSettings()
+            openSystemSettingsForDefaultBrowser()
         }
     }
 
-    private func openDefaultBrowserSettings() {
+    /// Opens System Settings at the default web browser section so the user
+    /// can manually set LinkStrip as the default browser. macOS does not allow
+    /// apps to change the default browser programmatically.
+    func openSystemSettingsForDefaultBrowser() {
         guard let url = URL(string: "x-apple.systempreferences:com.apple.Desktop-Settings.extension?DefaultBrowser") else {
             return
         }

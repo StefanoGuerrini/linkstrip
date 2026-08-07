@@ -20,17 +20,33 @@ struct PreferencesView: View {
                 Toggle("Clean links when clicked", isOn: $appState.preferences.cleanLinksOnOpen)
                     .help("Requires setting LinkStrip as the default browser in System Settings.")
 
-                Text("To clean clicked links, set LinkStrip as the default web browser in System Settings → Desktop & Dock. LinkStrip will intercept the click, clean the URL, and forward it to your previously selected browser.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                if appState.preferences.cleanLinksOnOpen {
+                    if BrowserRouter.shared.isLinkStripDefaultBrowser {
+                        HStack {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundStyle(.green)
+                            Text("LinkStrip is the default browser")
+                                .font(.caption)
+                                .foregroundStyle(.green)
+                            Spacer()
+                        }
+                    } else {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("macOS requires you to set LinkStrip as the default browser manually. Click the button below to open System Settings.")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+
+                            Button("Set LinkStrip as Default Browser…") {
+                                BrowserRouter.shared.openSystemSettingsForDefaultBrowser()
+                            }
+                            .controlSize(.regular)
+                        }
+                    }
+                }
 
                 HStack {
-                    if BrowserRouter.shared.isLinkStripDefaultBrowser {
-                        Text("LinkStrip is currently the default browser")
-                            .font(.caption)
-                            .foregroundStyle(.green)
-                    } else if let browser = BrowserRouter.shared.savedBrowserBundleID {
-                        Text("Default browser will be restored to \(browser)")
+                    if let browser = BrowserRouter.shared.savedBrowserBundleID {
+                        Text("Previous default browser: \(browser)")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
